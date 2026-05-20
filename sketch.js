@@ -12,6 +12,10 @@
 //   - Adding a new platform = adding one line of data
 //   - Later we can load this data from a JSON file instead
 // ------------------------------------------------------------
+
+let sushiBackground;
+let sushiBody;
+
 let platforms = [
   // { x, y, w, h }
   { x: 0,   y: 410, w: 800, h: 40 }, // ground (full width floor)
@@ -63,6 +67,12 @@ const PLATFORM_COLOR = [255, 160, 50]; // warm orange
 // Runs once at the very start of the sketch.
 // Sets up the canvas and positions the player on the ground.
 // ============================================================
+
+function preload() {
+  sushiBackground = loadImage("assets/images/sushi-background.jpg");
+  sushiBody = loadImage("assets/images/sushi.jpg");
+}
+
 function setup() {
   createCanvas(800, 450);
 
@@ -77,7 +87,7 @@ function setup() {
 // apply physics, resolve collisions, and draw everything.
 // ============================================================
 function draw() {
-  background(10);
+  background(sushiBackground);
 
   handleInput();
   applyPhysics();
