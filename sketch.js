@@ -69,7 +69,7 @@ const PLATFORM_COLOR = [255, 160, 50]; // warm orange
 // ============================================================
 
 function preload() {
-  sushiBackground = loadImage("assets/images/sushi-background.jpg");
+  sushiBackground = loadImage("assets/images/sushi-restaurant.jpg");
   sushiBody = loadImage("assets/images/sushi.png");
 }
 
