@@ -38,7 +38,9 @@ let player = {
   vx: 0, // horizontal velocity
   vy: 0, // vertical velocity
 
-  r: 20, // visual radius for blob drawing and collision
+  w: 50,
+  h: 50,
+  r: 25,
 
   // Movement tuning — change these to adjust how the game feels
   speed: 0.55,    // horizontal acceleration per frame
@@ -246,32 +248,8 @@ function drawPlatforms() {
 // ------------------------------------------------------------
 function drawPlayer() {
   push(); // save current drawing settings
-
-  fill(0, 200, 180); // teal
-  noStroke();
-
-  beginShape();
-  let numPoints = 48; // more points = smoother shape
-  for (let i = 0; i < numPoints; i++) {
-    let angle = (TWO_PI / numPoints) * i;
-
-    // noise() returns a smooth random value between 0 and 1.
-    // We use it to push each vertex in or out slightly.
-    let noiseVal = noise(cos(angle) * 0.8 + blobT, sin(angle) * 0.8 + blobT);
-
-    // map() converts noise (0–1) to a radius offset (-7 to +7 pixels)
-    let r = player.r + map(noiseVal, 0, 1, -7, 7);
-
-    // Convert polar coordinates (angle, radius) to x/y
-    vertex(player.x + cos(angle) * r, player.y + sin(angle) * r);
-  }
-  endShape(CLOSE);
-
-  // Draw two simple eyes
-  fill(10);
-  ellipse(player.x - 7, player.y - 5, 7, 7);
-  ellipse(player.x + 7, player.y - 5, 7, 7);
-
+  imageMode(CENTER);
+  image(sushiBody, player.x, player.y, player.w, player.h);
   pop(); // restore drawing settings
 }
 
