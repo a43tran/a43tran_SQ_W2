@@ -19,12 +19,13 @@ let sushiBody;
 let platforms = [
   // { x, y, w, h }
   { x: 0,   y: 410, w: 800, h: 40 }, // ground (full width floor)
-  { x: 80,  y: 310, w: 120, h: 16 }, // left low platform
-  { x: 280, y: 240, w: 140, h: 16 }, // centre platform
-  { x: 500, y: 170, w: 120, h: 16 }, // right high platform
-  { x: 160, y: 150, w: 100, h: 16 }, // left high platform
-  { x: 360, y: 320, w: 110, h: 16 }, // centre low platform
-  { x: 620, y: 290, w: 130, h: 16 }, // far right platform
+  { x: 80, y: 230, w: 120, h: 16 }, // left high platform
+  { x: 210, y: 350, w: 110, h: 16 }, // left low platform
+  { x: 560, y: 300, w: 120, h: 16 }, // centre low platform
+  { x: 290, y: 120, w: 140, h: 16 }, // centre platform
+  { x: 500, y: 180, w: 110, h: 16 }, // right high platform
+  { x: 620, y: 90, w: 120, h: 16 }, // far right platform
+  { x: 320, y: 250, w: 110, h: 16, slippery: true}, // slippery platform
 ];
 
 // ------------------------------------------------------------
@@ -38,8 +39,8 @@ let player = {
   vx: 0, // horizontal velocity
   vy: 0, // vertical velocity
 
-  w: 50,
-  h: 50,
+  w: 90,
+  h: 90,
   r: 25,
 
   // Movement tuning — change these to adjust how the game feels
@@ -62,7 +63,7 @@ const GRAVITY = 0.6; // downward force added to vy every frame
 let blobT = 0;
 
 // Platform colour stored as an array so it can be reused easily
-const PLATFORM_COLOR = [255, 255, 255]; // warm orange
+const PLATFORM_COLOR = [117, 48, 4]; // warm orange
 
 // ============================================================
 // setup()
@@ -90,7 +91,7 @@ function setup() {
 // ============================================================
 function draw() {
   background(sushiBackground);
-  filter(BLUR, 3);
+  filter(BLUR, 5);
 
   handleInput();
   applyPhysics();
@@ -217,10 +218,17 @@ function resolvePlatformCollisions() {
 
     if (overlapsHorizontally && landingOnTop) {
       player.y = platTop - player.r; // snap to platform surface
-      player.vy = 0;                 // stop falling
-      player.onGround = true;        // allow jumping again
+      
+      if (p.slippery) {
+        player.vy = 3;
+        player.vx *= 1.5;
+        player.onGround = false;
+    } else {
+      player.vy = 0;
+      player.onGround = true; // allow jumping again
     }
   }
+}
 }
 
 // ------------------------------------------------------------
@@ -230,14 +238,20 @@ function resolvePlatformCollisions() {
 // of objects — enemies, coins, tiles, etc.
 // ------------------------------------------------------------
 function drawPlatforms() {
-  fill(PLATFORM_COLOR[0], PLATFORM_COLOR[1], PLATFORM_COLOR[2]);
   noStroke();
 
   for (let i = 0; i < platforms.length; i++) {
     let p = platforms[i];
+
+    if (p.slippery) {
+      fill(255, 255, 255);
+    } else {
+        fill(PLATFORM_COLOR[0], PLATFORM_COLOR[1], PLATFORM_COLOR[2]);
+    }
+
     rect(p.x, p.y, p.w, p.h, 6); // rounded corners
   }
-}
+ }
 
 // ------------------------------------------------------------
 // drawPlayer()
@@ -260,7 +274,7 @@ function drawPlayer() {
 // how to interact without needing external instructions.
 // ------------------------------------------------------------
 function drawHUD() {
-  fill(180);
+  fill(255);
   noStroke();
   textSize(13);
   textAlign(LEFT);
