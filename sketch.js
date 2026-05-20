@@ -88,6 +88,7 @@ function setup() {
 // ============================================================
 function draw() {
   background(sushiBackground);
+  filter(BLUR, 3);
 
   handleInput();
   applyPhysics();
