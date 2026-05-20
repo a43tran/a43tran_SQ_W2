@@ -60,7 +60,7 @@ const GRAVITY = 0.6; // downward force added to vy every frame
 let blobT = 0;
 
 // Platform colour stored as an array so it can be reused easily
-const PLATFORM_COLOR = [255, 160, 50]; // warm orange
+const PLATFORM_COLOR = [255, 255, 255]; // warm orange
 
 // ============================================================
 // setup()
