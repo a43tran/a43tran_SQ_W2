@@ -15,6 +15,7 @@
 
 let sushiBackground;
 let sushiBody;
+let wasabi;
 
 let platforms = [
   // { x, y, w, h }
@@ -25,7 +26,7 @@ let platforms = [
   { x: 290, y: 120, w: 140, h: 16 }, // centre platform
   { x: 500, y: 180, w: 110, h: 16 }, // right high platform
   { x: 620, y: 90, w: 120, h: 16 }, // far right platform
-  { x: 320, y: 250, w: 110, h: 16, slippery: true}, // slippery platform
+  { x: 320, y: 250, w: 100, h: 16, slippery: true}, // slippery platform
 ];
 
 // ------------------------------------------------------------
@@ -74,6 +75,7 @@ const PLATFORM_COLOR = [117, 48, 4]; // warm orange
 function preload() {
   sushiBackground = loadImage("assets/images/sushi-restaurant.png");
   sushiBody = loadImage("assets/images/sushi.png");
+  wasabi = loadImage("assets/images/wasabi.png");
 }
 
 function setup() {
@@ -99,6 +101,7 @@ function draw() {
 
   drawPlatforms();
   drawPlayer();
+  drawWasabi();
   drawHUD();
 
   blobT += 0.015; // advance blob wobble animation each frame
@@ -221,7 +224,7 @@ function resolvePlatformCollisions() {
       
       if (p.slippery) {
         player.vy = 3;
-        player.vx *= 1.5;
+        player.vx *= 5;
         player.onGround = false;
     } else {
       player.vy = 0;
@@ -265,6 +268,12 @@ function drawPlayer() {
   imageMode(CENTER);
   image(sushiBody, player.x, player.y, player.w, player.h);
   pop(); // restore drawing settings
+}
+
+function drawWasabi() {
+  push();
+  image(wasabi, 320, 220, 100, 40);
+  pop();
 }
 
 // ------------------------------------------------------------
