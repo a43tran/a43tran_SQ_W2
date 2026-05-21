@@ -1,4 +1,4 @@
-# Week 2 Example 2: Platformer with Platforms Array
+# Side Quest Week 2
 
 ## Setup and Interaction Instructions
 
